@@ -69,7 +69,12 @@ export const GlobalProvider: React.FC<{ children: ReactNode }> = ({ children }) 
   useEffect(() => {
     const savedCart = localStorage.getItem('velora_cart_db');
     if (savedCart) {
-      setCart(JSON.parse(savedCart));
+      try {
+        setCart(JSON.parse(savedCart));
+      } catch (error) {
+        console.error("Failed to parse cart from storage:", error);
+        localStorage.removeItem('velora_cart_db');
+      }
     }
   }, []);
 
