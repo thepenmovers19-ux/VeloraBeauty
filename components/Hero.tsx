@@ -1,6 +1,9 @@
 import React from 'react';
+import { useGlobal } from '../context/GlobalContext';
 
 const Hero: React.FC = () => {
+  const { scrollToSection } = useGlobal();
+
   return (
     <section className="relative w-full min-h-[600px] h-[85vh] max-h-[900px] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
@@ -26,7 +29,10 @@ const Hero: React.FC = () => {
           Clinically proven ingestible beauty formulations designed to nourish your skin, hair, and nails at the cellular level.
         </p>
         <div className="pt-4">
-          <button className="bg-primary hover:bg-blue-700 text-white text-base font-bold py-4 px-8 rounded-lg transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-primary/50">
+          <button 
+            onClick={() => scrollToSection('shop')}
+            className="bg-primary hover:bg-blue-700 text-white text-base font-bold py-4 px-8 rounded-lg transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-primary/50"
+          >
             Shop The Collection
           </button>
         </div>

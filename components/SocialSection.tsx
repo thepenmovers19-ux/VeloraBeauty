@@ -31,7 +31,7 @@ const socialImages: SocialImage[] = [
 
 const SocialSection: React.FC = () => {
   return (
-    <section className="py-20 bg-white dark:bg-background-dark overflow-hidden">
+    <section id="journal" className="py-20 bg-white dark:bg-background-dark overflow-hidden scroll-mt-20">
       <div className="max-w-7xl mx-auto px-6 mb-10 flex justify-between items-end">
         <div>
           <h2 className="text-velora-black dark:text-white text-2xl font-bold mb-2">#VeloraLife</h2>

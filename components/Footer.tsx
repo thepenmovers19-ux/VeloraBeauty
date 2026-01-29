@@ -1,6 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useGlobal } from '../context/GlobalContext';
 
 const Footer: React.FC = () => {
+  const { showToast } = useGlobal();
+  const [email, setEmail] = useState('');
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+    showToast(`Welcome to Velora! Subscribed: ${email}`);
+    setEmail('');
+  };
+
   const linkGroups = [
     {
       title: 'Shop',
@@ -21,7 +32,7 @@ const Footer: React.FC = () => {
   ];
 
   return (
-    <footer className="bg-[#f0f2f5] dark:bg-[#0b0e14] pt-20 pb-10 border-t border-gray-200 dark:border-gray-800">
+    <footer id="footer" className="bg-[#f0f2f5] dark:bg-[#0b0e14] pt-20 pb-10 border-t border-gray-200 dark:border-gray-800">
       <div className="max-w-7xl mx-auto px-6">
         {/* Newsletter Signup */}
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-10 pb-16 border-b border-gray-300 dark:border-gray-800">
@@ -35,14 +46,17 @@ const Footer: React.FC = () => {
             </p>
           </div>
           <div className="w-full max-w-md">
-            <form className="flex gap-3">
+            <form onSubmit={handleSubscribe} className="flex gap-3">
               <input
                 type="email"
                 placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="flex-1 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-3 text-velora-black dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+                required
               />
               <button
-                type="button"
+                type="submit"
                 className="bg-primary hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-lg transition-colors whitespace-nowrap"
               >
                 Subscribe

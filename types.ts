@@ -9,6 +9,10 @@ export interface Product {
   isBestSeller?: boolean;
 }
 
+export interface CartItem extends Product {
+  quantity: number;
+}
+
 export interface SocialImage {
   id: number;
   imageUrl: string;

@@ -1,14 +1,23 @@
 import React from 'react';
+import { useGlobal } from '../context/GlobalContext';
 
 const Navbar: React.FC = () => {
-  const navLinks = ['Shop', 'Science', 'About', 'Journal'];
+  const { cart, toggleCart, scrollToSection } = useGlobal();
+  
+  const navLinks = [
+    { label: 'Shop', id: 'shop' },
+    { label: 'Science', id: 'science' },
+    { label: 'Journal', id: 'journal' },
+  ];
+
+  const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
     <header className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-[#e8ebf3] dark:bg-background-dark/80 dark:border-gray-800">
       <div className="flex items-center justify-between px-4 py-4 mx-auto max-w-7xl lg:px-10">
         {/* Left: Brand */}
         <div className="flex items-center gap-2 shrink-0">
-          <a href="#" className="flex items-center gap-2 text-velora-black dark:text-white">
+          <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth'}) }} className="flex items-center gap-2 text-velora-black dark:text-white">
             <span className="material-symbols-outlined text-primary text-3xl">spa</span>
             <span className="text-lg font-bold tracking-tight hidden md:block">Velora Beauty</span>
           </a>
@@ -17,14 +26,20 @@ const Navbar: React.FC = () => {
         {/* Center: Nav Links */}
         <nav className="flex items-center gap-3 md:gap-8 mx-2">
           {navLinks.map((item) => (
-            <a
-              key={item}
-              href="#"
+            <button
+              key={item.label}
+              onClick={() => scrollToSection(item.id)}
               className="text-xs md:text-sm font-medium hover:text-primary transition-colors text-velora-black dark:text-gray-200"
             >
-              {item}
-            </a>
+              {item.label}
+            </button>
           ))}
+          <button
+              onClick={() => scrollToSection('footer')}
+              className="text-xs md:text-sm font-medium hover:text-primary transition-colors text-velora-black dark:text-gray-200"
+            >
+              About
+          </button>
         </nav>
 
         {/* Right: Utility Icons */}
@@ -48,11 +63,16 @@ const Navbar: React.FC = () => {
             <button className="hidden md:block text-velora-black dark:text-white hover:text-primary transition-colors">
               <span className="material-symbols-outlined">account_circle</span>
             </button>
-            <button className="text-velora-black dark:text-white hover:text-primary transition-colors relative p-1">
+            <button 
+                onClick={toggleCart}
+                className="text-velora-black dark:text-white hover:text-primary transition-colors relative p-1"
+            >
               <span className="material-symbols-outlined text-[20px] md:text-[24px]">shopping_bag</span>
-              <span className="absolute top-0 right-0 flex h-3 w-3 md:h-4 md:w-4 items-center justify-center rounded-full bg-primary text-[8px] md:text-[10px] text-white">
-                2
-              </span>
+              {totalItems > 0 && (
+                <span className="absolute top-0 right-0 flex h-3 w-3 md:h-4 md:w-4 items-center justify-center rounded-full bg-primary text-[8px] md:text-[10px] text-white animate-pulse">
+                  {totalItems}
+                </span>
+              )}
             </button>
           </div>
         </div>
